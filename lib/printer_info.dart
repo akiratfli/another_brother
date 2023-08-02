@@ -3297,16 +3297,15 @@ class Printer {
     // TODO Consider moving this to iOS side.
     if (Platform.isIOS) {
       //BLE Scanning
-      FlutterBluePlus flutterBlue = FlutterBluePlus.instance;
 
       // Start scanning
-      flutterBlue.startScan(withServices: [Guid("A76EB9E0-F3AC-4990-84CF-3A94D2426B2B")], timeout: Duration(seconds: timeout~/1000));
+      FlutterBluePlus.startScan(withServices: [Guid("A76EB9E0-F3AC-4990-84CF-3A94D2426B2B")], timeout: Duration(seconds: timeout~/1000));
 
       Set<BLEPrinter> foundDevices = {};
       // Listen to scan results
-      var subscription = flutterBlue.scanResults.listen((results) {
+      var subscription = FlutterBluePlus.scanResults.listen((results) {
         for (ScanResult r in results) {
-          BLEPrinter found = BLEPrinter(localName: r.device.name);
+          BLEPrinter found = BLEPrinter(localName: r.device.localName);
           if (!foundDevices.contains(found)) {
             foundDevices.add(found);
           }
